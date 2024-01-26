@@ -12,29 +12,28 @@
     with_items: "{{ project.axiom | dict2items }}"
     register: file_exists
 
-  - name: Create simple dict with disovered file_exists
-    set_fact:
+  # - name: custom module
+  #     create_dict:
+  #     file_stats: file_exists.results
+    
+
+  # - name: Create simple dict with disovered file_exists
+  #   set_fact:
       # discovered_files: {
       #   "package_name": "{{ item.item.value.package_name }}",
       #   "absolute_path": "{{ item.stat.path }}",
       #   "file_name": "{{ item.item.value.file_name }}",
       #   "file_size": "{{ item.stat.size }}"
       # }
-      discovered_files: {
-        "package_name": "{{ item.item.value.package_name }}",
-        "absolute_path": "{{ item.stat.path }}",
-        "file_name": "{{ item.item.value.file_name }}",
-        "file_size": "{{ item.stat.size }}"
-      }
 
 
-    with_items: "{{ file_exists.results }}"
-    when: item.stat.exists == true
+    # with_items: "{{ file_exists.results }}"
+    # when: item.stat.exists == true
    
   
   - name: DEBUG
     debug: 
-      var: discovered_files
+      var: file_exists.results
   #   with_items: "{{ file_exists.results }}"
   #   when: item.stat.exists == true
       
