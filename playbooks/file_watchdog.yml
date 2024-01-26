@@ -1,0 +1,40 @@
+---
+- name: File Watchdog
+  hosts: localhost
+  gather_facts: true
+  vars_files:
+  - vars/tanium_packages.yml
+
+  tasks:
+  - name: For each nested dict check if file exists
+    stat:
+      path: "{{ root_path }}/{{ item.value.file_path }}/{{ item.value.file_name }}"
+    with_items: "{{ project.axiom | dict2items }}"
+    register: file_exists
+
+  - name: Create simple dict with disovered file_exists
+    set_fact:
+      # discovered_files: {
+      #   "package_name": "{{ item.item.value.package_name }}",
+      #   "absolute_path": "{{ item.stat.path }}",
+      #   "file_name": "{{ item.item.value.file_name }}",
+      #   "file_size": "{{ item.stat.size }}"
+      # }
+      discovered_files: {
+        "package_name": "{{ item.item.value.package_name }}",
+        "absolute_path": "{{ item.stat.path }}",
+        "file_name": "{{ item.item.value.file_name }}",
+        "file_size": "{{ item.stat.size }}"
+      }
+
+
+    with_items: "{{ file_exists.results }}"
+    when: item.stat.exists == true
+   
+  
+  - name: DEBUG
+    debug: 
+      var: discovered_files
+  #   with_items: "{{ file_exists.results }}"
+  #   when: item.stat.exists == true
+      

@@ -1,0 +1,17 @@
+---
+project:
+  axiom:
+    windows_binary:
+      package_name: MS - Execute Axiom Agent [Windows]
+      file_name: axiomagent.exe
+      file_path: /windows/
+    
+    macos_binary:
+      package_name: MS - Execute Axiom Agent [Mac]
+      file_name: Agent
+      file_path: /macos/
+    
+    macos_config:
+      package_name: MS - Execute Axiom Agent [Mac]
+      file_name: ludovico.cfg
+      file_path: /macos/
